@@ -42,6 +42,6 @@ app.use(require('./middleware/validate-session'))
 app.use("/api", fish)
 //app.use('/test', test)
 
-app.listen(4000, function() {
-  console.log("app is listening on 4000 and hello world");
+app.listen(process.env.PORT, function() {
+  console.log(`app is listening on ${process.env.PORT} and hello world`);
 });
