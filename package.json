@@ -5,10 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node appmjii.js"
+    "start": "node app.js"
     
   },
-  "author": "YOUR NAME HERE",
+  "author": "something",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
