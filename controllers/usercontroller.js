@@ -30,8 +30,7 @@ router.post("/createuser", function(req, res) {
     },
     function createError(err) {
       res.send(500, err.message);
-    }(
-    )
+    }
     
   );
 });
@@ -50,14 +49,14 @@ router.post("/signin", function(req,res){
 
         function comparePasswords(user){
             bcrypt.compare(password, user.passwordhash, function (err, matches){
-                matches ? generateToken(user) : res.send("Incorrect Password")
+                matches ? generateToken(user) : res.json({error: "Incorrect Password"})
             })
         }
 
         function generateToken(user){
 
             var token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-                expiresIn: 60 * 60 * 24
+                expiresIn: 60 * 60 * 240
               });
               res.json({
                 user: user,
