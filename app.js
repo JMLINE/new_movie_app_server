@@ -1,47 +1,29 @@
 require("dotenv").config();
-var express = require("express");
-var app = express();
-//var authTest = require("./controllers/authtestcontroller.js")
-// var test = require("./controllers/testcontroller");
-var sequelize = require("./db");
-var bodyParser = require("body-parser");
-
-var user = require("./controllers/usercontroller");
-var fish =require("./controllers/logcontroller")
-
-sequelize.sync();
-app.use(bodyParser.json());
+const Express = require("express");
+const app = Express();
+const dbConnection = require("./db");
 
 
-//test endpoint--before auth key
-// app.get("/api/about-me2", function (req, res){//
-//   res.send('hey hey hey hey')
-// })
-app.use(require('./middleware/header')) 
 
-app.use("/api/user", user);
-//app.use("/test-controller", test);
+let user = require("./controllers/usercontroller")
+let movies = require("./controllers/moviecontroller")
+
+app.use(Express.json());
+
+app.use(require("./middleware/header"))
+app.use("/user", user);
 app.use(require('./middleware/validate-session'))
+app.use("/movies", movies)
 
 
 
-//app.use("/api/authtest", authTest);
-
-
-// app.get('/', function(request, response){
-// response.send("Hello World")
-// })
-
-// app.use('/api/test', function(req,res){
-
-// res.send("This is data from the api/test endpoint")
-// })
-
-///////changed from log
-
-app.use("/api", fish)
-//app.use('/test', test)
-
-app.listen(process.env.PORT, function() {
-  console.log(`app is listening on ${process.env.PORT} and hello world`);
-});
+dbConnection.authenticate()
+  .then(() => dbConnection.sync())
+  .then(() => {
+    app.listen(3000, () => {
+      console.log(`[Server]: App is listening on 3000`);
+    });
+  })
+  .catch((err) => {
+    console.log `[Server]: Server crached. Error = ${err}`
+  });
