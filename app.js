@@ -1,14 +1,15 @@
 require("dotenv").config();
-const Express = require("express");
-const app = Express();
-const dbConnection = require("./db");
+const express = require("express");
+const app = express();
+var sequelize = require("./db");
 
 
 
 let user = require("./controllers/usercontroller")
 let movies = require("./controllers/moviecontroller")
 
-app.use(Express.json());
+sequelize.sync();
+app.use(express.json());
 
 app.use(require("./middleware/header"))
 app.use("/user", user);
@@ -17,14 +18,6 @@ app.use("/movies", movies)
 
 
 
-dbConnection.authenticate()
-  .then(() => dbConnection.sync())
-  .then(() => {
-    const port = process.env.PORT || 8000
-    app.listen(port, () => {
-      console.log(`[Server]: App is listening on ${process.env.PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.log `[Server]: Server crached. Error = ${err}`
-  });
+app.listen(process.env.PORT, function () {
+  console.log(`app is listening on ${process.env.PORT} and hello world`);
+});
