@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/user");
-const { UniqueConstraintError } = require("sequelize/lib/errors");
+const {
+  UniqueConstraintError
+} = require("sequelize/lib/errors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -15,12 +17,10 @@ router.post("/register", function (req, res) {
     email: email,
   }).then(
     function createSuccess(user) {
-      var token = jwt.sign(
-        {
+      var token = jwt.sign({
           id: user.id,
         },
-        process.env.JWT_SECRET,
-        {
+        process.env.JWT_SECRET, {
           expiresIn: 60 * 60 * 24,
         }
       );
@@ -51,20 +51,19 @@ router.post("/signin", function (req, res) {
     function comparePasswords(user) {
       bcrypt.compare(password, user.password, function (err, matches) {
         matches
-          ? generateToken(user)
-          : res.json({
-              error: "Incorrect Password",
-            });
+          ?
+          generateToken(user) :
+          res.json({
+            error: "Incorrect Password",
+          });
       });
     }
 
     function generateToken(user) {
-      var token = jwt.sign(
-        {
+      var token = jwt.sign({
           id: user.id,
         },
-        process.env.JWT_SECRET,
-        {
+        process.env.JWT_SECRET, {
           expiresIn: 60 * 60 * 240,
         }
       );

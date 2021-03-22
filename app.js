@@ -20,9 +20,9 @@ app.use("/movies", movies)
 dbConnection.authenticate()
   .then(() => dbConnection.sync())
   .then(() => {
-    app.listen(process.env.PORT, () => {
-      console.log(`server is listening on port ${process.env.PORT}`)
-    })
+    app.listen(3000, () => {
+      console.log(`[Server]: App is listening on 3000`);
+    });
   })
   .catch((err) => {
     console.log `[Server]: Server crached. Error = ${err}`

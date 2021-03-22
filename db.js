@@ -1,14 +1,7 @@
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
-})
-sequelize.authenticate().then(
-    function () {
-        console.log("Connected to movie postgres database");
-    },
-    function (err) {
-        console.log(err);
-    }
-);
+const {
+    Sequelize
+} = require("sequelize");
 
-module.exports = sequelize
+const db = new Sequelize("postgresql://postgres:password@localhost/newMovieDb");
+
+module.exports = db;
