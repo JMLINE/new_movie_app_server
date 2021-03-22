@@ -20,7 +20,8 @@ app.use("/movies", movies)
 dbConnection.authenticate()
   .then(() => dbConnection.sync())
   .then(() => {
-    app.listen(process.env.PORT, () => {
+    const port = process.env.PORT || 8000
+    app.listen(port, () => {
       console.log(`[Server]: App is listening on ${process.env.PORT}`);
     });
   })
