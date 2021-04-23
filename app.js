@@ -4,6 +4,9 @@ const app = express();
 var sequelize = require("./db");
 
 
+app.use("/test", (req, res) => {
+  res.send("test")
+})
 
 let user = require("./controllers/usercontroller")
 let movies = require("./controllers/moviecontroller")
